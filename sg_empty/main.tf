@@ -27,7 +27,7 @@ resource "aws_security_group" "main" {
 
   tags = "${var.tags}"
 
-  lifecycle {
-    ignore_changes = ["ingress.*.protocol", "protocol"]
-  }
+  # lifecycle {
+  #   ignore_changes = ["ingress.*.protocol", "protocol"]
+  # }
 }
