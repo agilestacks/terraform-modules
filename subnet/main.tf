@@ -22,7 +22,7 @@ resource "aws_subnet" "main" {
   cidr_block = "${var.cidr_block}"
   availability_zone = "${var.availability_zone}"
   tags {
-    Name = "${var.name}.${base_domain}"
+    Name = "${var.name}"
   }
 }
 
