@@ -15,6 +15,9 @@ parameters:
   - name: name
     default: private
     env:  TF_VAR_name
+  - name: base_domain
+    default: kubernetes.delivery
+    env:  TF_VAR_base_domain
   - name: cidr
     env:  TF_VAR_cidr_block
     default: 10.0.1.0/24
