@@ -5,6 +5,8 @@ variable "name" {
   default = "private"
 }
 
+variable "base_domain" {}
+
 variable "cidr_block" {
   default = "10.0.1.0/24"
 }
@@ -22,7 +24,7 @@ resource "aws_subnet" "main" {
   cidr_block = "${var.cidr_block}"
   availability_zone = "${var.availability_zone}"
   tags {
-    Name = "${var.name}"
+    Name = "${var.name}.${base_domain}"
   }
 }
 

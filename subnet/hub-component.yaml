@@ -1,0 +1,29 @@
+---
+version: 1
+kind: component
+meta:
+  name: postgresql-rds
+  brief: Creates a subnet
+  source:
+    dir: ../subnet
+
+parameters:
+- name: cloud.vpc
+  env:  TF_VAR_vpc_id
+- name: component.subnet
+  parameters:
+  - name: name
+    default: private
+    env:  TF_VAR_name
+  - name: cidr
+    env:  TF_VAR_cidr_block
+    default: 10.0.1.0/24
+  - name: availability_zone
+    env:  TF_VAR_availability_zone
+    default: ""
+outputs:
+- name: component.subnet.id
+  fromTfVar: subnet_id
+
+templates:
+  files: ["*.template"]
