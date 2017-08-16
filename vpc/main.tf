@@ -31,7 +31,7 @@ resource "aws_subnet" "public" {
         on_failure = "continue"
         command = <<END
 export AWS_DEFAULT_OUTPUT="json"
-export SUBNET_ID=${this.id}
+export SUBNET_ID=${aws_subnet.public.id}
 
 ELB_DATA=$(
   aws elb describe-load-balancers | jq -Mr '.LoadBalancerDescriptions[] | [{Subnets: .Subnets,  LoadBalancerName: .LoadBalancerName, SecurityGroups: .SecurityGroups}]  | select(.[].Subnets[] | contains("'$SUBNET_ID'"))'
