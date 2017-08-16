@@ -44,7 +44,7 @@ done
 echo "Wait for completion"
 sleep 15
 
-for GROUP_ID in $(echo ${ELB_DATA} | jq -Mr .[].SecurityGroups[] | xargs); do
+for GROUP_ID in $(echo $ELB_DATA | jq -Mr .[].SecurityGroups[] | xargs); do
   echo "Delete Security Group $GROUP_ID"
   echo aws ec2 delete-security-group --group-id $GROUP_ID | true
 done
