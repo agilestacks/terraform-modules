@@ -37,16 +37,16 @@ ELB_DATA=$(
   aws elb describe-load-balancers | jq -Mr '.LoadBalancerDescriptions[] | [{Subnets: .Subnets,  LoadBalancerName: .LoadBalancerName, SecurityGroups: .SecurityGroups}]  | select(.[].Subnets[] | contains("'$SUBNET_ID'"))'
 )
 
-for ELB_NAME in $(echo $ELB_DATA | jq -Mr .[].LoadBalancerName | xargs); do
+for ELB_NAME in $(echo $ELB_DATA | jq -Mr '.[].LoadBalancerName' | xargs); do
   echo "Delete ELB $ELB_NAME"
   aws elb delete-load-balancer --load-balancer-name $ELB_NAME
 done
 echo "Wait for completion"
 sleep 15
 
-for GROUP_ID in $(echo $ELB_DATA | jq -Mr .[].SecurityGroups[] | xargs); do
+for GROUP_ID in $(echo $ELB_DATA | jq -Mr '.[].SecurityGroups[]' | xargs); do
   echo "Delete Security Group $GROUP_ID"
-  echo aws ec2 delete-security-group --group-id $GROUP_ID | true
+  aws ec2 delete-security-group --group-id $GROUP_ID
 done
 echo "Wait for completion"
 sleep 15
