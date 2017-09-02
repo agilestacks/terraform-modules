@@ -23,6 +23,10 @@ data "template_file" "kubeconfig_delete" {
 resource "local_file" "client_pem" {
   content  = "${var.client_pem}"
   filename = "${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-client.pem"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "local_file" "client_key" {
@@ -33,6 +37,10 @@ resource "local_file" "client_key" {
 resource "local_file" "ca_pem" {
   content  = "${var.ca_pem}"
   filename = "${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-ca.pem"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "local_file" "configure" {
@@ -40,6 +48,10 @@ resource "local_file" "configure" {
   filename = "${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-kubeconfig.sh"
   provisioner "local-exec" {
     command = "chmod +x ${self.filename}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -69,4 +81,8 @@ resource "null_resource" "configure" {
 resource "local_file" "dummy_kubeconf" {
   filename = "${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-kubeconf.dummy"
   content = "${file("${path.module}/kubeconfig.dummy")}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
