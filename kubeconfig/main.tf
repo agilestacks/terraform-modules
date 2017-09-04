@@ -78,7 +78,10 @@ resource "null_resource" "configure" {
   provisioner "local-exec" {
     on_failure = "continue"
     when = "destroy"
-    command = "[ \"${var.apply}\" = \"true\" ] && sh ${local_file.unconfigure.filename}"
+    # this is originally `sh ${local_file.unconfigure.filename}`, but
+    # * module.kubeconfig.null_resource.configure (destroy): 1 error(s) occurred:
+    # * Resource 'local_file.unconfigure' not found for variable 'local_file.unconfigure.filename'
+    command = "[ \"${var.apply}\" = \"true\" ] && sh ${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-unkubeconfig.sh"
   }
 }
 
