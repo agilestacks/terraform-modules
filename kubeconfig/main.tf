@@ -61,6 +61,10 @@ resource "local_file" "unconfigure" {
   provisioner "local-exec" {
     command = "chmod +x ${self.filename}"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "null_resource" "configure" {
