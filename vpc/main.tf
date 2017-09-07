@@ -51,8 +51,6 @@ for GROUP_ID in $(echo $ELB_DATA | jq -Mr '.[].SecurityGroups[]' | xargs); do
   echo "Delete Security Group $GROUP_ID"
   aws ec2 delete-security-group --group-id $GROUP_ID
 done
-echo "Wait for completion"
-sleep 15
 echo "Done"
 
 END
