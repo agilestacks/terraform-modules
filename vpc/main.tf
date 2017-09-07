@@ -40,9 +40,12 @@ ELB_DATA=$(
 for ELB_NAME in $(echo $ELB_DATA | jq -r '.[].LoadBalancerName' | xargs); do
   echo "Delete ELB $ELB_NAME"
   aws elb delete-load-balancer --load-balancer-name $ELB_NAME
+  elb_found=1
 done
-echo "Wait for completion"
-sleep 30
+if test -n "$elb_found"; then
+  echo "Wait for completion"
+  sleep 30
+fi
 
 for GROUP_ID in $(echo $ELB_DATA | jq -Mr '.[].SecurityGroups[]' | xargs); do
   echo "Delete Security Group $GROUP_ID"
