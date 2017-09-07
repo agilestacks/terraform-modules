@@ -51,6 +51,9 @@ for GROUP_ID in $(echo $ELB_DATA | jq -Mr '.[].SecurityGroups[]' | xargs); do
   echo "Delete Security Group $GROUP_ID"
   aws ec2 delete-security-group --group-id $GROUP_ID
 done
+aws ec2 describe-security-groups --filters Name=vpc-id,Values=${aws_vpc.main.id} --query 'SecurityGroups[*].{name:GroupName,id:GroupId}' |
+  jq -r '.[] | select(.name | contains("default") | not) | .id' |
+  xargs -n1 aws ec2 delete-security-group --group-id
 echo "Done"
 
 END
