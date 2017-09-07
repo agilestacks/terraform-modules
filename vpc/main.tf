@@ -34,10 +34,10 @@ export AWS_DEFAULT_OUTPUT="json"
 export SUBNET_ID=${aws_subnet.public.id}
 
 ELB_DATA=$(
-  aws elb describe-load-balancers | jq -Mr '.LoadBalancerDescriptions[] | [{Subnets: .Subnets,  LoadBalancerName: .LoadBalancerName, SecurityGroups: .SecurityGroups}]  | select(.[].Subnets[] | contains("'$SUBNET_ID'"))'
+  aws elb describe-load-balancers | jq -r '.LoadBalancerDescriptions[] | [{Subnets: .Subnets,  LoadBalancerName: .LoadBalancerName, SecurityGroups: .SecurityGroups}]  | select(.[].Subnets[] | contains("'$SUBNET_ID'"))'
 )
 
-for ELB_NAME in $(echo $ELB_DATA | jq -Mr '.[].LoadBalancerName' | xargs); do
+for ELB_NAME in $(echo $ELB_DATA | jq -r '.[].LoadBalancerName' | xargs); do
   echo "Delete ELB $ELB_NAME"
   aws elb delete-load-balancer --load-balancer-name $ELB_NAME
 done
