@@ -44,7 +44,7 @@ for ELB_NAME in $(echo $ELB_DATA | jq -r '.[].LoadBalancerName' | xargs); do
 done
 if test -n "$elb_found"; then
   echo "Wait for completion"
-  sleep 30
+  sleep 60
 fi
 
 for GROUP_ID in $(echo $ELB_DATA | jq -Mr '.[].SecurityGroups[]' | xargs); do
