@@ -29,3 +29,9 @@ variable "cidr_block" {
   description = "describe your variable"
   default = "10.0.0.0/16"
 }
+
+variable "ssh_cidr_block" {
+  type = "string"
+  description = "CIDR block for SSH access at VPC default security group"
+  default = "0.0.0.0/0"
+}
