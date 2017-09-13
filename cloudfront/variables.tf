@@ -1,6 +1,14 @@
 variable "s3_origin" {}
 
-variable "s3_logging" {}
+variable "s3_origin_domain_name" {
+  type = "string"
+  default = ""
+}
+
+variable "s3_logging" {
+  type = "string"
+  default = ""
+}
 
 variable "domain_names" {
 	type = "list"

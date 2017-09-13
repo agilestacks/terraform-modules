@@ -1,6 +1,6 @@
 resource "aws_cloudfront_distribution" "main" {
   origin {
-    domain_name = "${var.s3_origin}.s3.amazonaws.com"
+    domain_name = "${coalesce("${var.s3_origin_domain_name}", "${var.s3_origin}.s3.amazonaws.com")}"
     origin_id   = "S3-${var.s3_origin}"
 
     s3_origin_config {
