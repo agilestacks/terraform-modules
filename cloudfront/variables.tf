@@ -20,6 +20,11 @@ variable "acm_certificate_arn" {
   default = ""
 }
 
+variable "cloudfront_default_certificate" {
+  type = "string"
+  default = "false"
+}
+
 # variable "domain_name" {
 #   default = ""
 # }
