@@ -59,6 +59,7 @@ resource "aws_cloudfront_distribution" "main" {
     cloudfront_default_certificate = true
     acm_certificate_arn = "${var.acm_certificate_arn}"
     ssl_support_method = "sni-only"
+    minimum_protocol_version = "TLSv1"
   }
 }
 
