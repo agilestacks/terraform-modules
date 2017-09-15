@@ -15,6 +15,11 @@ variable "domain_names" {
 	default = []
 }
 
+variable "acm_certificate_arn" {
+  type = "string"
+  default = ""
+}
+
 # variable "domain_name" {
 #   default = ""
 # }
