@@ -13,3 +13,7 @@ output "website_endpoint" {
 output "hosted_zone_id" {
   value = "${aws_s3_bucket.main.hosted_zone_id}"
 }
+
+output "bucket_domain_name" {
+  value = "${aws_s3_bucket.main.bucket_domain_name}"
+}
