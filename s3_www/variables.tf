@@ -11,7 +11,7 @@ variable "acl" {
 variable "init_script" {
   type = "string"
   description = "script that will be executed after S3 will be created"
-  default = ""
+  default = "echo skipping s3 sync"
 }
 
 variable "protocol_schema" {
