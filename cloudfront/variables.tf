@@ -25,6 +25,12 @@ variable "cloudfront_default_certificate" {
   default = "false"
 }
 
+variable "viewer_protocol_policy" {
+  type = "string"
+  description = "One of allow-all, https-only, or redirect-to-https"
+  default = "redirect-to-https"
+}
+
 # variable "domain_name" {
 #   default = ""
 # }

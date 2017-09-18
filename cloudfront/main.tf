@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "main" {
       }
     }
 
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "${var.viewer_protocol_policy}"
     min_ttl                = 0
     default_ttl            = 86400
     max_ttl                = 31536000
