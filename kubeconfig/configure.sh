@@ -1,10 +1,12 @@
 #!/bin/sh
 
 kubectl config set-cluster ${cluster} \
+  --embed-certs=true \
   --server=${server} \
   --certificate-authority=${ca_pem}
 
 kubectl config set-credentials admin@${cluster} \
+  --embed-certs=true \
   --certificate-authority=${ca_pem} \
   --client-key=${client_key} \
   --client-certificate=${client_pem}
