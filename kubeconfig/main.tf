@@ -4,9 +4,9 @@ data "template_file" "kubeconfig" {
   vars {
     cluster     = "${element(split(":", element(split("://", "${var.server}"), 1)), 0)}"
     server      = "${var.server}"
-    ca_pem      = "${local_file.ca_pem.filename}"
+    ca_pem      = "${local_file.ca_crt.filename}"
     client_key  = "${local_file.client_key.filename}"
-    client_pem  = "${local_file.client_pem.filename}"
+    client_pem  = "${local_file.client_crt.filename}"
     namespace   = "${var.namespace}"
     use_context = "${var.use_context}"
   }
@@ -20,7 +20,7 @@ data "template_file" "kubeconfig_delete" {
   }
 }
 
-resource "local_file" "client_pem" {
+resource "local_file" "client_crt" {
   content  = "${var.client_pem}"
   filename = "${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-client.pem"
 
@@ -34,7 +34,7 @@ resource "local_file" "client_key" {
   filename = "${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-client-key.pem"
 }
 
-resource "local_file" "ca_pem" {
+resource "local_file" "ca_crt" {
   content  = "${var.ca_pem}"
   filename = "${path.cwd}/.terraform/${replace(element(split(":", element(split("://", "${var.server}"), 1)), 0), ".", "-")}-ca.pem"
 
