@@ -31,21 +31,20 @@ variable "viewer_protocol_policy" {
   default = "redirect-to-https"
 }
 
-# variable "domain_name" {
-#   default = ""
-# }
+variable "min_ttl" {
+  type = "string"
+  description = "Cache behaviour min TTL (0 default)"
+  default = "0"
+}
 
-# variable "domain_name0" {
-#   default = ""}
+variable "default_ttl" {
+  type = "string"
+  description = "Cache behaviour default TTL (1d default)"
+  default = "86400"
+}
 
-# variable "domain_name1" {
-#   default = ""
-# }
-
-# variable "domain_name2" {
-#   default = ""
-# }
-
-# variable "domain_name3" {
-#   default = ""
-# }
+variable "max_ttl" {
+  type = "string"
+  description = "Cache behaviour max TTL (1y default)"
+  default = "31536000"
+}
