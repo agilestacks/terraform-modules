@@ -22,6 +22,11 @@ variable "ttl" {
   default = "30"
 }
 
+variable "prevent_destroy" {
+  description = "true or false"
+  default = false
+}
+
 # variable "record" {
 # 	default = ""
 # }
