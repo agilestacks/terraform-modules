@@ -7,5 +7,6 @@ resource "aws_route53_record" "main" {
 
   lifecycle {
     ignore_changes = ["records", "ttl"]
+    prevent_destroy = true
   }
 }
