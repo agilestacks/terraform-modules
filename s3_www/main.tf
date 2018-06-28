@@ -35,13 +35,13 @@ POLICY
 #         allowed_methods = ["GET", "PUT", "POST"]
 #         allowed_origins = [ <<EOF
 # ${compact(
-#     concat(var.cors_origin0, 
-#            var.cors_origin1, 
-#            var.cors_origin2, 
-#            var.cors_origin3, 
-#            var.cors_origin4,           
-#            var.cors_origin5, 
-#            var.cors_origin6, 
+#     concat(var.cors_origin0,
+#            var.cors_origin1,
+#            var.cors_origin2,
+#            var.cors_origin3,
+#            var.cors_origin4,
+#            var.cors_origin5,
+#            var.cors_origin6,
 #            var.cors_origin7)
 #          )}
 # EOF
@@ -63,10 +63,10 @@ POLICY
 #   content_type = "text/html"
 # }
 
-resource "null_resource" "s3_sync" {
-  depends_on = ["aws_s3_bucket.main"]
+# resource "null_resource" "s3_sync" {
+#   depends_on = ["aws_s3_bucket.main"]
 
-  provisioner "local-exec" {
-    command = "${var.init_script}"
-  }
-}
+#   provisioner "local-exec" {
+#     command = "${var.init_script}"
+#   }
+# }
