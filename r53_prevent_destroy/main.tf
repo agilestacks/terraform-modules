@@ -4,7 +4,7 @@ resource "aws_route53_record" "main" {
   type    = "${var.type}"
   ttl     = "${var.ttl}"
   records = ["${var.records}"]
-
+  set_identifier = "${var.identifier}"
   lifecycle {
     ignore_changes = ["records", "ttl"]
     prevent_destroy = true
