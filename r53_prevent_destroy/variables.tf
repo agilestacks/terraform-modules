@@ -27,12 +27,6 @@ variable "prevent_destroy" {
   default = false
 }
 
-variable "identifier" {
-  type = "string"
-  description = "Set identifier for route53 record. Useful for failover routing"
-  default = ""
-}
-
 # variable "record" {
 # 	default = ""
 # }
