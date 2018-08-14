@@ -39,8 +39,7 @@ resource "aws_iam_access_key" "main" {
 resource "aws_iam_user_policy" "s3write" {
   name_prefix  = "argo"
   user = "${var.username}"
-  policy = <<EOF
-EOF
+  policy = "${var.policy}"
 }
 
 output "access_key_id" {
