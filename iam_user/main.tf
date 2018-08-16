@@ -36,10 +36,18 @@ resource "aws_iam_access_key" "main" {
   user    = "${aws_iam_user.main.name}"
 }
 
-resource "aws_iam_user_policy" "s3read" {
+resource "aws_iam_user_policy" "root" {
   name_prefix  = "argo"
   user = "${aws_iam_user.main.name}"
   policy = "${var.policy}"
+}
+
+output "arn" {
+  value = "${aws_iam_user.main.arn}"
+}
+
+output "unique_id" {
+  value = "${aws_iam_user.main.unique_id}"
 }
 
 output "access_key_id" {
