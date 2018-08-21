@@ -26,7 +26,27 @@ variable "policy" {
 EOF
 }
 
+data "aws_region" "current" {}
+
+resource "null_resource" "clenup_policies" {
+  provisioner "local-exec" {
+    when = "destroy"
+    on_failure = "continue"
+    command=<<EOF
+#!/bin/bash
+policies=$(aws --region="${data.aws_region.current.name}" iam list-user-policies --user-name "${aws_iam_user.main.name}" --query "PolicyNames[]" --output=
+ | xargs)
+for policy in "$policies"; do
+  echo "Delete IAM policy: $policy"
+  aws --region="${data.aws_region.current.name}" iam delete-user-policy --user-name="${aws_iam_user.main.name}" --policy-name="$policy"
+done
+EOF
+  }
+}
+
 resource "aws_iam_user" "main" {
+  depends_on = ["null_resource.clenup_policies"]
+
   name = "${var.username}"
   path = "${var.path}"
   force_destroy = true
