@@ -32,7 +32,7 @@ resource "null_resource" "clenup_policies" {
   provisioner "local-exec" {
     when = "destroy"
     on_failure = "continue"
-    \
+
     command=<<EOF
 #!/bin/bash
 policies=$(aws --region="${data.aws_region.current.name}" iam list-user-policies --user-name "${aws_iam_user.main.name}" --query "PolicyNames[]" --output=
