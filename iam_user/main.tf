@@ -32,6 +32,7 @@ resource "null_resource" "clenup_policies" {
   provisioner "local-exec" {
     when = "destroy"
     on_failure = "continue"
+    \
     command=<<EOF
 #!/bin/bash
 policies=$(aws --region="${data.aws_region.current.name}" iam list-user-policies --user-name "${aws_iam_user.main.name}" --query "PolicyNames[]" --output=
@@ -45,8 +46,6 @@ EOF
 }
 
 resource "aws_iam_user" "main" {
-  depends_on = ["null_resource.clenup_policies"]
-
   name = "${var.username}"
   path = "${var.path}"
   force_destroy = true
