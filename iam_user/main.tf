@@ -35,7 +35,7 @@ resource "null_resource" "clenup_policies" {
 
     command=<<EOF
 #!/bin/bash
-policies=$(aws --region="${data.aws_region.current.name}" iam list-user-policies --user-name "${aws_iam_user.main.name}" --query "PolicyNames[]" --output=
+policies=$(aws --region=${data.aws_region.current.name} iam list-user-policies --user-name=${aws_iam_user.main.name} --query=PolicyNames[] --output=json
  | xargs)
 for policy in "$policies"; do
   echo "Delete IAM policy: $policy"
