@@ -18,8 +18,9 @@ resource "aws_cloudfront_distribution" "main" {
   enabled             = true
   comment             = "${var.s3_origin}"
   default_root_object = "index.html"
+  price_class         = "PriceClass_100"
   # price_class = "PriceClass_200"
-  price_class = "PriceClass_All"
+  # price_class = "PriceClass_All"
 
   # logging_config {
   #   include_cookies = false
