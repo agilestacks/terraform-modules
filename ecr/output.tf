@@ -6,6 +6,7 @@ output "name" {
   value = "${aws_ecr_repository.main.name}"
 }
 
+
 output "registry_id" {
   value = "${aws_ecr_repository.main.registry_id}"
 }

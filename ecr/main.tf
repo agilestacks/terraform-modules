@@ -3,8 +3,6 @@ resource "aws_ecr_repository" "main" {
 }
 
 resource "aws_ecr_repository_policy" "main" {
-  repository = "${var.name}"
+  repository = "${aws_ecr_repository.main.name}"
   policy = "${var.policy}"
-
-  depends_on = ["aws_ecr_repository.main"]
 }
