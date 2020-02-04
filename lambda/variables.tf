@@ -12,7 +12,7 @@ variable "handler" {
 variable "runtime" {
   type = "string"
   description = "describe your variable"
-  default = "python2.7"
+  default = "python3.7"
 }
 
 variable "timeout" {
@@ -41,8 +41,7 @@ variable "security_groups" {
 
 variable "zip_file" {
   type = "string"
-  description = "zip file with lambda function. If empty then hello world function will be deployed"
-  default = ""
+  description = "zip file with lambda function from s3"
 }
 
 variable "kms_key_arn" {
@@ -83,4 +82,16 @@ variable "policy" {
   }]
 }
 EOF
+}
+
+variable "tags" {
+  description = "AWS tags to be applied to created resources."
+  type        = "map"
+  default     = {}
+}
+
+variable "env_vars" {
+  description = "Enviroment variables"
+  type        = "map"
+  default     = {}
 }

@@ -1,20 +1,25 @@
+locals {
+  function_name = "${substr(var.name, 0, min(length(var.name), 64))}"
+  function_role_name_prefix = "${substr(local.function_name, 0, min(length(local.function_name), 32))}"
+}
+
 resource "aws_lambda_function" "main" {
-    function_name    = "${var.name}"
-    filename         = "${coalesce("${var.zip_file}", "${path.module}/lambda.zip")}"
+    function_name    = "${local.function_name}"
+    filename         = "${data.local_file.archive.filename}"
     runtime          = "${var.runtime}"
-    role             = "${aws_iam_role.iam_for_lambda.arn}"
+    role             = "${aws_iam_role.lambda_role.arn}"
     handler          = "${var.handler}"
     memory_size      = "${var.ram}"
     timeout          = "${var.timeout}"
     publish          = true
-    # kms_key_arn      = "${var.kms_key_arn}"
-    # environment {
-    #   variables        = "${var.variables}"
-    # }
-    # vpc_config {
-    #   subnet_ids         = ["${var.subnet_ids}"]
-    #   security_group_ids = ["${var.security_groups}"]
-    # }
+    tags             = "${var.tags}"
+    environment {
+        variables = "${var.env_vars}"
+    } 
+}
+
+data "local_file" "archive" {
+    filename = "${var.zip_file}"
 }
 
 # resource "aws_lambda_alias" "latest" {
@@ -24,8 +29,8 @@ resource "aws_lambda_function" "main" {
 #     function_version = "$LATEST"
 # }
 
-resource "aws_iam_role" "iam_for_lambda" {
-    name_prefix = "${substr(var.name, 0, 24)}-invoke-"
+resource "aws_iam_role" "lambda_role" {
+    name_prefix = "${local.function_role_name_prefix}"
     assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -41,8 +46,8 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
-resource "aws_iam_role_policy" "lambda" {
-    name = "${var.name}-lambda-execution"
-    role = "${aws_iam_role.iam_for_lambda.id}"
+resource "aws_iam_role_policy" "lambda_policy" {
+    name = "${local.function_name}-lambda-execution"
+    role = "${aws_iam_role.lambda_role.id}"
     policy="${var.policy}"
 }
